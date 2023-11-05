@@ -1,8 +1,12 @@
 
 ### prxmatch関数
 
-正規表現によりパターンマッチを行う。
-処理結果は「見つからなければ0」「見つかった場合は文字列の位置」が返り値として設定される。
+- 正規表現によりパターンマッチを行う。
+- 返り値
+  - 指定パターンが見つかった場合 ... 1以上の整数
+  - 指定パターンが見つからなかった場合 ... 0
+
+> [PRXMATCH Function - SAS Help Center](https://documentation.sas.com/doc/en/pgmsascdc/v_044/ds2ref/p0m49np18q0pdxn1laab98pazajo.htm)
 
 #### dataステップでの利用
 ``` sas
