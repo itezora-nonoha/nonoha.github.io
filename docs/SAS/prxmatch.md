@@ -9,8 +9,13 @@
 > [PRXMATCH Function - SAS Help Center](https://documentation.sas.com/doc/en/pgmsascdc/v_044/ds2ref/p0m49np18q0pdxn1laab98pazajo.htm)
 
 #### dataステップでの利用
+
 ``` sas
-find_pos = prxmatch();
+data _null_;
+    prx_pattern = /[A-Z0-9_]+/;
+    target_text = ABC_123;
+    find_pos = prxmatch(prx_pattern, target_text);
+run;
 ```
 
 #### マクロ内での利用
@@ -20,4 +25,13 @@ find_pos = prxmatch();
 %let prx_pattern = /[A-Z0-9_]+/;
 %let target_text = ABC_123;
 %let find_pos = %sysfunc(prxmatch(&prx_pattern, &target_text);
+```
+
+#### メモ
+- 正規表現の始端終端を表現するスラッシュ`/`を入れると、スラッシュ自身がパターン内の文字列として認識されてしまうことがある。そういう時はprxparseを挟むと確実。
+``` sas
+
+%let prx_pattern = %sysfunc(prxparse(/[A-Z0-9_]+/));
+%let target_text = ABC_123;
+%let find_pos = %sysfunc(prxmatch(&prx_pattern, &target_text));
 ```
