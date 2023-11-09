@@ -27,3 +27,30 @@
 #### ステートメント
 - dataステップ内に記述する「処理に関する内容」。setやwhere、keepなどをよく使う。
 - こちらのkeep/dropは「dataステップ内で作成・使用し、出力するデータセットにも含みたい(外したい)」ときに使用する。
+
+- 
+
+
+#### CASライブラリの情報を表示する
+``` sas
+cas casauto;
+proc cas;
+  %local _tmp_result;
+  table.caslibinfo result = rs / caslib = "casuser";
+  symputx('_tmp_result', rs['caslibinfo'][1]['Path'], 'L') /* rsデータセットから値を取得し、マクロ変数に格納　*/
+quit;
+```
+
+> https://go.documentation.sas.com/doc/ja/pgmsascdc/9.4_3.5/caspg/cas-table-caslibinfo.htm
+
+#### テーブルを「セッションスコープ」から「グローバルスコープ」に格上げする
+
+``` sas
+cas casauto;
+proc cas;
+  table.promote /
+    name="mytable"
+    caslib="TEST" /* sourceCaslib= でもOK */
+    targetlib="TARGET"; /* targetCaslib= でもOK */
+quit;
+```
